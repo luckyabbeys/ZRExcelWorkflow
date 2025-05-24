@@ -1,0 +1,19 @@
+# Excel自动化处理工作流依赖包
+
+# 数据处理
+pandas>=1.3.0
+numpy>=1.20.0
+
+# Excel操作
+openpyxl>=3.0.7
+xlrd>=2.0.1
+xlsxwriter>=1.4.0
+
+# 并行处理
+concurrent-log-handler>=0.9.19
+
+# 命令行参数解析
+argparse>=1.4.0
+
+# 日志处理
+colorlog>=6.6.0
