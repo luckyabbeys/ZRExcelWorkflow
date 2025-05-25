@@ -93,8 +93,9 @@ def run_phase1(logger, sheet=None, input_file=None, output_file=None):
     if output_file is None:
         # 获取输入文件名，去掉扩展名
         input_file_name = os.path.splitext(os.path.basename(input_file))[0]
-        # 生成输出文件名
-        output_file = os.path.join('data', 'output', f'{input_file_name}合并phase1sheet1.xlsx')
+        # 生成输出文件名（动态使用传入的sheet参数）
+        phase_step = f'phase1sheet{sheet}' if sheet else 'phase1'
+        output_file = os.path.join('data', 'output', f'{input_file_name}合并{phase_step}.xlsx')
     
     # 确保输入文件存在
     if not os.path.exists(input_file):
