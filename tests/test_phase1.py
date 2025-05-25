@@ -41,7 +41,9 @@ class TestPhase1(unittest.TestCase):
         os.makedirs(self.output_dir, exist_ok=True)
         
         # 创建测试源文件路径
-        self.source_file = os.path.join(self.input_dir, '测试原始数据.xlsx')
+        # 修改测试源文件名
+        self.source_file = os.path.join(self.input_dir, '原始数据.xlsx')
+        
         self.target_file = os.path.join(self.output_dir, '测试合并.xlsx')
         
         # 创建测试数据

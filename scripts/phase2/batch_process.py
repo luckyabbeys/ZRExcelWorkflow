@@ -42,25 +42,34 @@ def setup_logging():
     )
     return logging.getLogger(__name__)
 
+# 假设参考文件路径
+REFERENCE_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'data', 'example', 'reference.xlsx')
+
+# 在脚本启动时读取表头数据
+def load_reference_header():
+    try:
+        excel_file = pd.ExcelFile(REFERENCE_FILE)
+        df = excel_file.parse('Lis01_就诊合并')
+        return df.columns.tolist()
+    except Exception as e:
+        logger.error(f"读取参考文件表头时发生错误: {e}")
+        return []
+
+REFERENCE_HEADER = load_reference_header()
+
 def process_single_file(source_file, output_dir, sheets_to_process=None):
-    """
-    处理单个Excel文件
-    
-    参数:
-        source_file (str): 源Excel文件路径
-        output_dir (str): 输出目录路径
-        sheets_to_process (list, optional): 要处理的sheet列表，如果为None则处理所有sheet
-        
-    返回:
-        tuple: (文件名, 成功处理的sheet列表, 失败处理的sheet列表)
-    """
     logger = logging.getLogger(__name__)
     
-    # 获取文件名（不含扩展名）
-    file_name = os.path.splitext(os.path.basename(source_file))[0]
+    # 修改输入文件名
+    file_name = os.path.splitext(os.path.basename(source_file))[0].replace('测试原始数据', '原始数据')
     
-    # 创建输出文件路径
-    target_file = os.path.join(output_dir, f"{file_name}_processed.xlsx")
+    # 动态生成输出文件名
+    if sheets_to_process and len(sheets_to_process) == 1:
+        phase = 1
+        sheet_num = int(sheets_to_process[0].replace('sheet', ''))
+        target_file = os.path.join(output_dir, f"{file_name}合并phase{phase}sheet{sheet_num}.xlsx")
+    else:
+        target_file = os.path.join(output_dir, f"{file_name}_processed.xlsx")
     
     # 记录处理结果
     success_sheets = []

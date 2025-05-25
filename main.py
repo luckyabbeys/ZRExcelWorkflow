@@ -88,10 +88,13 @@ def run_phase1(logger, sheet=None, input_file=None, output_file=None):
     
     # 设置默认文件路径
     if input_file is None:
-        input_file = os.path.join('data', 'input', '测试原始数据.xlsx')
+        input_file = os.path.join('data', 'input', '原始数据.xlsx')
     
     if output_file is None:
-        output_file = os.path.join('data', 'output', '测试合并.xlsx')
+        # 获取输入文件名，去掉扩展名
+        input_file_name = os.path.splitext(os.path.basename(input_file))[0]
+        # 生成输出文件名
+        output_file = os.path.join('data', 'output', f'{input_file_name}合并phase1sheet1.xlsx')
     
     # 确保输入文件存在
     if not os.path.exists(input_file):
@@ -202,7 +205,10 @@ def run_phase3(logger, input_dir=None, output_file=None):
         input_dir = os.path.join('data', 'output')
     
     if output_file is None:
-        output_file = os.path.join('data', 'output', '最终合并.xlsx')
+        # 获取输入文件名，去掉扩展名
+        input_file_name = os.path.splitext(os.path.basename(input_file))[0]
+        # 生成输出文件名
+        output_file = os.path.join('data', 'output', f'{input_file_name}合并phase3.xlsx')
     
     # 确保目录存在
     if not os.path.exists(input_dir):
